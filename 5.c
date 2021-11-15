@@ -40,30 +40,6 @@ int main()
     return 0;
 }
 
-int Lista(element* HEAD, float broj)
-{
-    element* novi = (element*)malloc(sizeof(element));
-
-    if (!novi)
-        return -1;
-
-    novi->next = HEAD->next;
-    HEAD->next = novi;
-    novi->broj = broj;
-
-    return 0;
-}
-
-float prviDrugi(element* HEAD)
-{
-    float broj = HEAD->next->broj;
-    element* temp = HEAD->next;
-    HEAD->next = HEAD->next->next;
-
-    free(temp);
-    return broj;
-}
-
 int Postfix(element* HEAD, char* filename)
 {
     FILE* fp = NULL;
@@ -133,3 +109,28 @@ int Operacija(element* HEAD, char operator)
 
     return 0;
 }
+
+int Lista(element* HEAD, float broj)
+{
+    element* novi = (element*)malloc(sizeof(element));
+
+    if (!novi)
+        return -1;
+
+    novi->next = HEAD->next;
+    HEAD->next = novi;
+    novi->broj = broj;
+
+    return 0;
+}
+
+float prviDrugi(element* HEAD)
+{
+    float broj = HEAD->next->broj;
+    element* temp = HEAD->next;
+    HEAD->next = HEAD->next->next;
+
+    free(temp);
+    return broj;
+}
+
