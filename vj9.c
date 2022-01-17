@@ -1,6 +1,6 @@
 #include <stdio.h>
 #include <stdlib.h>
-#include < string.h>
+#include <string.h>
 #define MIN (10)
 #define MAX (90)
 
@@ -15,9 +15,9 @@ typedef struct Tree
 
 }tree;
 
-Position InsertElement(int element, Position position);
-Position CreateElement(int element);
-int PrintInDat(Position root, FILE* fp);
+Position Insert(int element, Position position);
+Position Create(int element);
+int Print(Position root, FILE* fp);
 int Replace(Position root);
 int FindRandom();
 
@@ -46,43 +46,43 @@ int main()
 		switch (num)
 		{
 		case 1:
-			root = InsertElement(2, root);
-			root = InsertElement(5, root);
-			root = InsertElement(7, root);
-			root = InsertElement(8, root);
-			root = InsertElement(11, root);
-			root = InsertElement(1, root);
-			root = InsertElement(4, root);
-			root = InsertElement(2, root);
-			root = InsertElement(3, root);
-			root = InsertElement(7, root);
+			root = Insert(2, root);
+			root = Insert(5, root);
+			root = Insert(7, root);
+			root = Insert(8, root);
+			root = Insert(11, root);
+			root = Insert(1, root);
+			root = Insert(4, root);
+			root = Insert(2, root);
+			root = Insert(3, root);
+			root = Insert(7, root);
 
 			fprintf(fp, "Numbers from the task:\n");
-			PrintInDat(root, fp);
+			Print(root, fp);
 			fprintf(fp, "\n");
 			Replace(root);
-			PrintInDat(root, fp);
+			Print(root, fp);
 			fprintf(fp, "\n");
 
 			break;
 
 		case 2:
-			root = InsertElement(FindRandom(), root);
-			root = InsertElement(FindRandom(), root);
-			root = InsertElement(FindRandom(), root);
-			root = InsertElement(FindRandom(), root);
-			root = InsertElement(FindRandom(), root);
-			root = InsertElement(FindRandom(), root);
-			root = InsertElement(FindRandom(), root);
-			root = InsertElement(FindRandom(), root);
-			root = InsertElement(FindRandom(), root);
-			root = InsertElement(FindRandom(), root);
+			root = Insert(FindRandom(), root);
+			root = Insert(FindRandom(), root);
+			root = Insert(FindRandom(), root);
+			root = Insert(FindRandom(), root);
+			root = Insert(FindRandom(), root);
+			root = Insert(FindRandom(), root);
+			root = Insert(FindRandom(), root);
+			root = Insert(FindRandom(), root);
+			root = Insert(FindRandom(), root);
+			root = Insert(FindRandom(), root);
 
 			fprintf(fp, "\nRandom numbers:\n");
-			PrintInDat(root, fp);
+			Print(root, fp);
 			fprintf(fp, "\n");
 			Replace(root);
-			PrintInDat(root, fp);
+			Print(root, fp);
 			fprintf(fp, "\n");
 			break;
 
@@ -97,7 +97,7 @@ int main()
 
 }
 
-Position InsertElement(int element, Position position)
+Position Insert(int element, Position position)
 {
 	Position temp = NULL;
 	Position NewElement = NULL;
@@ -105,13 +105,13 @@ Position InsertElement(int element, Position position)
 
 	if (temp == NULL)
 	{
-		NewElement = CreateElement(element);
+		NewElement = Create(element);
 		return NewElement;
 	}
 	else if (element < temp->element)
-		temp->Right = InsertElement(element, temp->Right);
+		temp->Right = Insert(element, temp->Right);
 	else if (element >= temp->element)
-		temp->Left = InsertElement(element, temp->Left);
+		temp->Left = Insert(element, temp->Left);
 
 
 	return temp;
@@ -119,7 +119,7 @@ Position InsertElement(int element, Position position)
 
 }
 
-Position CreateElement(int element)
+Position Create(int element)
 {
 	Position NewElement = NULL;
 	NewElement = (Position)malloc(sizeof(tree));
@@ -137,16 +137,16 @@ Position CreateElement(int element)
 	return NewElement;
 }
 
-int PrintInDat(Position root, FILE* fp)
+int Print(Position root, FILE* fp)
 {
 	Position current = NULL;
 	current = root;
 
 	if (current != NULL)
 	{
-		PrintInDat(current->Left, fp);
+		Print(current->Left, fp);
 		fprintf(fp, "%d ", current->element);
-		PrintInDat(current->Right, fp);
+		Print(current->Right, fp);
 
 
 	}
