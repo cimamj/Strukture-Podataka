@@ -1,4 +1,4 @@
-﻿#define _CRT_SECURE_NO_WARNINGS
+#define _CRT_SECURE_NO_WARNINGS
 
 #include <stdio.h>
 #include <stdlib.h>
@@ -17,10 +17,10 @@ typedef struct _historyStack {
     struct _historyStack* next;
 } history;
 
-Node* createNew(char* name);
-int insertSorted(Node* parent, Node* newNode);
-Node* findLastSmallerByName(Node* refElement, Node* searchElement);
-int listDirectory(Node* parent, history* historyHEAD);
+Node* createNewStruct(char* name);
+int insertSort(Node* parent, Node* newNode);
+Node* findLastSmallerName(Node* refElement, Node* searchElement);
+int showListDirectory(Node* parent, history* historyHEAD);
 int shell(Node* treeROOT, history* historyHEAD);
 int pushHistoryStack(history* HEAD, Node* upperDirectory);
 Node* popHistoryStack(history* HEAD);
@@ -34,7 +34,7 @@ int dir(Node* currentDirectory, char* argument, history* historyHEAD);
 
 int main(void)
 {
-    Node* ROOT = createNew("root");
+    Node* ROOT = createNewStruct("root");
     history* historyHEAD = (history*)malloc(sizeof(history));
 
     if (!ROOT) {
@@ -53,7 +53,7 @@ int main(void)
     return shell(ROOT, historyHEAD);
 }
 
-Node* createNew(char* name)
+Node* createNewStruct(char* name)
 {
     Node* newNode = (Node*)malloc(sizeof(Node));
     strcpy(newNode->name, name);
@@ -64,7 +64,7 @@ Node* createNew(char* name)
     return newNode;
 }
 
-int insertSorted(Node* parent, Node* newNode)
+int insertSort(Node* parent, Node* newNode)
 {
     Node* firstLeftElement = parent->child;
 
@@ -72,7 +72,7 @@ int insertSorted(Node* parent, Node* newNode)
         parent->child = newNode;
     }
     else {
-        Node* lastSmallerElement = findLastSmallerByName(parent->child, newNode);
+        Node* lastSmallerElement = findLastSmallerName(parent->child, newNode);
 
         if (direcoryExistsInCurrent(parent, newNode->name))
             return -2; /* Element s istim imenom vec postoji. */
@@ -84,7 +84,7 @@ int insertSorted(Node* parent, Node* newNode)
     return 0;
 }
 
-Node* findLastSmallerByName(Node* firstElementInDir, Node* searchElement)
+Node* findLastSmallerName(Node* firstElementInDir, Node* searchElement)
 {
     Node* P = firstElementInDir;
 
@@ -94,7 +94,7 @@ Node* findLastSmallerByName(Node* firstElementInDir, Node* searchElement)
     return P;
 }
 
-int listDirectory(Node* parent, history* historyHEAD)
+int showListDirectory(Node* parent, history* historyHEAD)
 {
     Node* currentFile = parent->child;
 
@@ -229,7 +229,7 @@ int md(Node* currentDirectory, char* argument)
     if (!argumentIsValid(argument))
         printf("Nije uneseno ime direktorija.\n");
     else {
-        error = insertSorted(currentDirectory, createNew(argument));
+        error = insertSort(currentDirectory, createNewStruct(argument));
         if (error == -2)
             printf("Direktorij već postoji.\n");
     }
@@ -270,11 +270,11 @@ int dir(Node* currentDirectory, char* argument, history* historyHEAD)
 
     if (argumentIsValid(argument))
         if (direcoryExistsInCurrent(currentDirectory, argument))
-            error = listDirectory(getDirecoryFromName(currentDirectory, argument), historyHEAD);
+            error = showListDirectory(getDirecoryFromName(currentDirectory, argument), historyHEAD);
         else
             printf("Direktorij nije pronađen!\n");
     else
-        error = listDirectory(currentDirectory, historyHEAD);
+        error = showListDirectory(currentDirectory, historyHEAD);
 
     if (error == -3)
         printf("Direktorij je prazan.\n");
