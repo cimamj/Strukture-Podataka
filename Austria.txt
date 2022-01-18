@@ -1,0 +1,5 @@
+Vienna 1840500
+Innsbruck 126800
+Graz 273800
+Salzburg 148500
+Linz 198000

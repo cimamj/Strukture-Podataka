@@ -1,0 +1,5 @@
+Koln 965300
+Berlin 3275000
+Munchen 1185400
+Frankfurt 648000
+Hamburg 1686100
